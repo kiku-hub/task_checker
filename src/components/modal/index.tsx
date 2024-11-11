@@ -1,22 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
 
-export const FormModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+interface Props {
+  handleClose: () => void;
+  isOpen: boolean;
+}
 
-  Modal.setAppElement("#root");
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgb(80, 80, 80, 0.8)",
+  },
+  content: {
+    top: "10%",
+    left: "60%",
+    right: "50%",
+    height: "75vh",
+    width: "20vw",
+    marginLeft: "-30vw",
+    padding: "2vw 10vw",
+  },
+};
+
+export const FormModal = (props: Props) => {
+
+  Modal.setAppElement("#root");  
 
   return (
     <div>
-      <button onClick={handleOpen}>開くボタン</button>
-      <Modal isOpen={isOpen}>
-        <button onClick={handleClose}>閉じるボタン</button>
+      <Modal
+        isOpen={props.isOpen}
+        onRequestClose={props.handleClose}
+        style={customStyles}
+      >
       </Modal>
     </div>
   );
