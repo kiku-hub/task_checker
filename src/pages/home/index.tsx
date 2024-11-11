@@ -5,9 +5,18 @@ import { ToDoList } from "../../components/toDoList";
 import { FormModal } from "../../components/modal";
 import { taskRequest } from "../../requests/taskRequest";
 import { genreRequest } from "../../requests/genreRequest";
-import { useDataReducer } from "../../hooks/useDataReducer";
+import { Data, dataAction, useDataReducer } from "../../hooks/useDataReducer";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import "./style.css";
+
+type dataContextType = {
+  data: Data;
+  dispatch: ({ type, payload }: dataAction) => void;
+};
+
+export const DataContext = React.createContext<dataContextType>(
+  {} as dataContextType
+);
 
 export const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,24 +44,26 @@ export const Home = () => {
   }, [data]);
 
   return (
-    <div className="main">
-      <Header />
-      <div className="genre">
-        <Select genres={data.genresData} />
-        <AddCircleOutlineIcon
-          className="add_circle_outline_icon"
-          fontSize="medium"
-          onClick={handleOpen}
-        />
-        <FormModal
-          handleClose={handleClose}
-          isOpen={isOpen}
-          body="genreBody"
-        />
+    <DataContext.Provider value={{ data, dispatch }}>
+      <div className="main">
+        <Header />
+        <div className="genre">
+          <Select genres={data.genresData} />
+          <AddCircleOutlineIcon
+            className="add_circle_outline_icon"
+            fontSize="medium"
+            onClick={handleOpen}
+          />
+          <FormModal
+            handleClose={handleClose}
+            isOpen={isOpen}
+            body="genreBody"
+          />
+        </div>
+        <div className="contents">
+          <ToDoList tasks={data.tasksData}/>
+        </div>
       </div>
-      <div className="contents">
-        <ToDoList tasks={data.tasksData}/>
-      </div>
-    </div>
+    </DataContext.Provider>
   );
 };
