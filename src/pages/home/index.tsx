@@ -5,11 +5,13 @@ import { ToDoList } from "../../components/toDoList";
 import { FormModal } from "../../components/modal";
 import { taskRequest } from "../../requests/taskRequest";
 import { genreRequest } from "../../requests/genreRequest";
+import { useDataReducer } from "../../hooks/useDataReducer";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import "./style.css";
 
 export const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [data, dispatch] = useDataReducer();
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -18,17 +20,19 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    const showGenres = async () => {
-      const response = await genreRequest("fetchGenres");
-      console.log(response);
+    const fetchData = async () => {
+      await genreRequest("fetchGenres");
+      await taskRequest("fetchTasks");
+      dispatch({ type: "genresUpdate" });
+      dispatch({ type: "tasksUpdate" });
     };
-    const showTasks = async () => {
-      const response = await taskRequest("fetchTasks");
-      console.log(response);
-    };
-    showGenres();
-    showTasks();
+    fetchData();
+    // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="main">
