@@ -21,10 +21,10 @@ export const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await genreRequest("fetchGenres");
-      await taskRequest("fetchTasks");
-      dispatch({ type: "genresUpdate" });
-      dispatch({ type: "tasksUpdate" });
+      const genres = await genreRequest("fetchGenres");
+      const tasks = await taskRequest("fetchTasks");
+      dispatch({ type: "genresUpdate", payload: { genre: genres } });
+      dispatch({ type: "tasksUpdate", payload: { task: tasks } });
     };
     fetchData();
     // eslint-disable-next-line
