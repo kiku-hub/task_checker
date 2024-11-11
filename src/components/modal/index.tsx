@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { GenreBody } from "./genreBody";
+import { TaskBody } from "./taskBody";
 
 interface Props {
   handleClose: () => void;
@@ -26,7 +27,7 @@ const customStyles = {
 const renderBody = (body: string) => {
   switch (body) {
     case "taskBody":
-      return "";
+      return <TaskBody />;
     case "genreBody":
       return <GenreBody />;
     default:
@@ -35,9 +36,6 @@ const renderBody = (body: string) => {
 };
 
 export const FormModal = (props: Props) => {
-
-  Modal.setAppElement("#root");
-
   return (
     <div>
       <Modal
