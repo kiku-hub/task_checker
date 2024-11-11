@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from "../../components/header";
 import { Select } from "../../components/select";
 import { ToDoList } from "../../components/toDoList";
+import { FormModal } from "../../components/modal";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import "./style.css";
 
@@ -13,8 +14,9 @@ export const Home = () => {
         <Select />
         <AddCircleOutlineIcon
           className="add_circle_outline_icon"
-          fontSize="medium"
+          fontSize="default"
         />
+        <FormModal />
       </div>
       <div className="contents">
         <ToDoList />
