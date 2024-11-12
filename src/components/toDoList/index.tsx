@@ -8,6 +8,7 @@ import "./style.css";
 
 interface Props {
   tasks: TaskType[];
+  title: string;
 }
 
 export const ToDoList = (props: Props) => {
@@ -22,12 +23,14 @@ export const ToDoList = (props: Props) => {
     <div className="task_list">
       <div className="section">
         <MenuIcon className="section_ele" />
-        <span className="section_ele">ToDo</span>
-        <AddCircleOutlineIcon
-          className="add_circle_outline_icon"
-          fontSize="small"
-          onClick={handleOpen}
-        />
+        <span className="section_ele">{props.title}</span>
+        {props.title === "ToDo" && (
+          <AddCircleOutlineIcon
+            className="add_circle_outline_icon"
+            fontSize="small"
+            onClick={handleOpen}
+          />
+        )}
         <FormModal
           handleClose={handleClose}
           isOpen={isOpen}
