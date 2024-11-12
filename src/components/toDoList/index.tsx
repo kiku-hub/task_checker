@@ -13,16 +13,23 @@ interface Props {
 
 export const ToDoList = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
   const handleClose = () => {
     setIsOpen(false);
   };
+
+  const handleOnClick = () => {
+    setIsListOpen(!isListOpen);
+  };
+
   return (
     <div className="task_list">
       <div className="section">
-        <MenuIcon className="section_ele" />
+        <MenuIcon className="section_ele" onClick={handleOnClick} />
         <span className="section_ele">{props.title}</span>
         {props.title === "ToDo" && (
           <AddCircleOutlineIcon
@@ -38,9 +45,11 @@ export const ToDoList = (props: Props) => {
         />
       </div>
       <div className="task_field">
-        {props.tasks.map((task: TaskType) => {
-          return <Task task={task} key={task.id} />;
-        })}
+        {isListOpen &&
+          props.tasks.map((task: TaskType) => {
+            return <Task task={task} key={task.id} />;
+          })
+        }
       </div>
     </div>
   );
