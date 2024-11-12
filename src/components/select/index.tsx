@@ -1,12 +1,28 @@
 import React from "react";
-import "./style.css"
+import { GenreType } from "../../interfaces/GenreType";
+import "./style.css";
 
-export const Select = () => {
+interface Props {
+  genres?: GenreType[];
+  changeSelect?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const renderOption = (props: Props) => {
   return (
-    <select className="select">
-      <option value={0}>0</option>
-      <option value={1}>1</option>
-      <option value={2}>2</option>
+    props.genres &&
+    props.genres.map((genre: GenreType) => (
+      <option key={genre.id} value={genre.id}>
+        {genre.name}
+      </option>
+    ))
+  );
+};
+
+export const Select = (props: Props) => {
+  return (
+    <select className="select" onChange={props.changeSelect}>
+      {props.genres !== undefined && <option value={0}></option>}
+      {renderOption(props)}
     </select>
   );
 };

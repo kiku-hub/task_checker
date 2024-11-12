@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Select } from "../../components/select";
+import { DataContext } from "../../pages/home";
 import "./style.css";
 
 export const TaskBody = () => {
+  const { data } = useContext(DataContext);
   return (
     <form className="modal_body">
       <h2 className="input_menu">タスクを追加</h2>
       <div>
         <h4 className="input_title">ジャンル</h4>
         <div className="task_genre">
-          <Select />
+          <Select genres={data.genresData} />
         </div>
         <h4 className="input_title">タイトル</h4>
         <input type="text" />
